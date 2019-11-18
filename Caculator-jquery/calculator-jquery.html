@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="Css-jquery/Css-jquery.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="box">
+      <input type="input" id="mytext" class="input_text" onkeydown="return KeyboardEvent(event)">
+      <div class="calculator">
+        <span class="Number-reset" id="keysC">C</span>
+        <span class="Number-backspace" id="keysC"><</span> 
+        <span class="Number-Division" id="keysC">/</span>
+        <span class="Number" id="keys">1</span>
+        <span class="Number" id="keys">2</span>
+        <span class="Number" id="keys">3</span>
+        <span class="Number-sum" id="keysC">+</span>
+        <span class="Number" id="keys">4</span>
+        <span class="Number" id="keys">5</span>
+        <span class="Number" id="keys">6</span>
+        <span class="Number-Multiplication" id="keysC">*</span>
+        <span class="Number" id="keys">7</span>
+        <span class="Number" id="keys">8</span>
+        <span class="Number" id="keys">9</span>
+        <span class="Number-Subtraction" id="keysC">-</span>
+        <span class="Number" id="keys">0</span>
+        <span class="Number-equal" id="equal">=</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function () {
+      $(".Number").on('click', function (evt) {
+        var buttonPressed = $(this).html();
+        var tempvalue = $("input").val();
+        tempvalue += buttonPressed;
+        $("input").val(tempvalue);
+      });
+
+
+      $("input").focus(); //FocusCalculator
+
+      $(".Number-equal").click(function () { //EvalCalculator
+        ComputingCalculator();
+      });
+
+      $(".Number-reset").click(function () { //ClearCalculator
+        $("input").val("");
+      });
+      $('.Number-backspace').click(function () { //BackspaceCalculator
+        var str = $('input').val();
+        $('input').val(str.substring(0, str.length - 1));
+      });
+
+      $('.Number-sum').on('click', function (e) {
+        ShowNumber('+');
+      });
+
+      $('.Number-Subtraction').on('click', function (e) {
+        ShowNumber('-');
+      });
+
+      $('.Number-Multiplication').on('click', function (e) {
+        ShowNumber('*');
+      });
+
+      $('.Number-Division').on('click', function (e) {
+        ShowNumber('/');k
+      });
+
+
+    });
+
+    var counter = 0;
+
+    function ShowNumber(button) {
+      if (button == '+' || button == "-" || button == "*" || button == "/") {
+        CounterNumber();
+      }
+     
+      document.getElementById('mytext').value += button;
+      $("input").focus();
+    }
+
+    function   CounterNumber(){
+      counter++;
+      if (counter > 1) {
+        ComputingCalculator();
+      }
+    }
+
+
+
+    function CalculatorEval(equal) {
+      var numberinput = document.getElementById('mytext');
+      if (numberinput.value === null || numberinput.value === "" || numberinput.value === undefined) {
+        return;
+      } else if (equal == '=') {
+        ComputingCalculator();
+      }
+
+    }
+
+
+    function ComputingCalculator() {
+      var numberinput2 = $("input").val();
+      var calculatoreval = eval(numberinput2);
+      $("input").val(calculatoreval);
+      $("input").focus();
+    }
+
+
+    function KeyboardEvent(event) {
+      var numberinput3 = $("input").val();
+      var keycode = event.keyCode;
+      if (keycode == 46) { //Delete
+        $("input").val("");
+      }
+
+      if (keycode == 13) { //Enter
+        if (numberinput3 === null || numberinput3 === '' || numberinput3 === undefined) {
+          return;
+        }
+      }
+
+      if (keycode === 107 || keycode === 109 || keycode === 106 || keycode === 111 || keycode === 13) {
+        CounterNumber();
+      }
+
+
+      if (keycode === 13 || keycode === 46 || keycode === 8 || (keycode >= 46 && keycode <= 57) || (keycode>= 97  && keycode <= 109)) {
+        return;
+      } else {
+        return false;
+      }  
+    }
+
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="Css/css.css">
+</head>
+
+<body onload="FocusCalculator()">
+
+  <div class="container">
+    <div class="box">
+      <input type="input" id="mytext" class="input_text" onkeydown="return KeyboardEvent(event)">
+      <div class="calculator">
+        <span class="Number" onclick="ShowNumber('1')">1</span>
+        <span class="Number" onclick="ShowNumber('2')">2</span>
+        <span class="Number" onclick="ShowNumber('3')">3</span>
+        <span class="Number" onclick="ShowNumber('+')">+</span>
+        <span class="Number" onclick="ShowNumber('4')">4</span>
+        <span class="Number" onclick="ShowNumber('5')">5</span>
+        <span class="Number" onclick="ShowNumber('6')">6</span>
+        <span class="Number" onclick="ShowNumber('*')">*</span>
+        <span class="Number" onclick="ShowNumber('7')">7</span>
+        <span class="Number" onclick="ShowNumber('8')">8</span>
+        <span class="Number" onclick="ShowNumber('9')">9</span>
+        <span class="Number" onclick="ShowNumber('-')">-</span>
+        <span class="Number" onclick="CalculatorEval()">=</span>
+        <span class="Number" onclick="ShowNumber('0')">0</span>
+        <span class="Number" onclick="CalculatorReset()">C</span>
+        <span class="Number" onclick="ShowNumber('/')">/</span>
+        <span class="Number" onclick="BacakspaceCalculator()"><</span>
+         </div>
+         </div>
+         </div> <script>
+
+            var counter =0;
+            function ShowNumber(button) {
+            if (button == '+' || button == "-" || button == "*" || button == "/") {
+              CounterNumber();
+            }
+            document.getElementById('mytext').value += button;
+            FocusCalculator();
+            }
+            
+            function  CounterNumber(){
+              counter++;
+              if(counter>1){
+              CalculatorEval();
+              }
+            }
+
+            function CalculatorEval(){
+            var numberinput2 = document.getElementById('mytext').value;
+            if (numberinput2 === null || numberinput2 === "" || numberinput2 === undefined) {
+            return;
+            }
+            var calculatoreval = eval(numberinput2);
+            document.getElementById('mytext').value = calculatoreval;
+            FocusCalculator();
+            
+            }
+
+
+            function CalculatorReset() {
+            document.getElementById('mytext').value = "";
+            }
+
+            function KeyboardEvent(event) {
+            var numberinput1 = document.getElementById('mytext');
+            var keycode = event.keyCode;
+            if (keycode == 46) { //Delete
+            document.getElementById('mytext').value = "";
+            }
+            if (keycode == 13) { //Enter
+            if (numberinput1.value === null || numberinput1.value === "" || numberinput1.value === undefined) {
+            return;
+            }
+            }
+
+            if (keycode === 107 || keycode === 109 || keycode === 106 || keycode === 111 || keycode === 13) {
+              CounterNumber();
+            }
+
+            if (keycode === 13 || keycode === 46 || keycode === 8 || (keycode >= 46 && keycode <= 57) || (keycode>= 97  && keycode <= 109))
+            { return; 
+            } else { 
+              return false; 
+            }           
+            } 
+
+
+            function FocusCalculator() {
+              document.getElementById('mytext').focus(); 
+             } 
+                
+              function BacakspaceCalculator() { 
+                var value=document.getElementById('mytext').value;
+                document.getElementById('mytext').value=value.substring(0, value.length - 1); 
+              } 
+
+
+
+              </script>
+               </body> 
+               </html>
+              
